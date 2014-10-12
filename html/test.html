@@ -36,11 +36,11 @@ function update(){
 			x = temp[1];
 			$("#number"+(i+1)).text(x);
 			if(x/80>0.5){
-				green = Math.round(2*(1-x/80)*255);
+				green = Math.round(2*(1-x/150)*255);
 				$("#box"+(i+1)).css("background-color", "rgb(255,"+green+",0)");
 			}
 			else{
-				red = Math.round((x/40)*255);
+				red = Math.round((x/100)*255);
 				$("#box"+(i+1)).css("background-color", "rgb("+red+",255,0)");
 			}
 		}

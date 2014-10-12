@@ -113,8 +113,9 @@ body{
 	position:relative;
 	top: 10%;
 	height:1.5%;
-	width:100%;
+	width: 75%;
 	border: 1px black solid;
+	padding-right: 100px;
 }
 #box2 {
     
@@ -145,6 +146,8 @@ body{
 	height:1.5%;
 	width:100%;
 	border: 1px black solid;
+	padding-left: 5px;
+	padding-right: 10px;
 }
 
 #number1,#number2, #number3{

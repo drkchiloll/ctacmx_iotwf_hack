@@ -42,7 +42,7 @@
 						for (var h = 0; h < Grids.HEIGHT/6; h++) {
 							for (var w = 0; w < Grids.WIDTH; w++) {
 								if (Grids.grid[h][w] === Grids.ALIVE) {
-									context.fillStyle = "#000";									
+									context.fillStyle = "#F00";									
 								} else {
 									context.fillStyle = 'rgba(0, 0, 0, 0)';
 								}
@@ -57,7 +57,7 @@
 						for (var h = 0; h < Grids.HEIGHT/6 + Grids.HEIGHT/6; h++) {
 							for (var w = 0; w < Grids.WIDTH; w++) {
 								if (Grids.grid[h][w] === Grids.ALIVE) {
-									context.fillStyle = "#FF0000";									
+									context.fillStyle = "#F00";									
 								} else {
 									context.fillStyle = 'rgba(0, 0, 0, 0)';
 								}
@@ -71,7 +71,7 @@
 						for (var h = 0; h < Grids.HEIGHT/6 + Grids.HEIGHT/6 + Grids.HEIGHT/6; h++) {
 							for (var w = 0; w < Grids.WIDTH; w++) {
 								if (Grids.grid[h][w] === Grids.ALIVE) {
-									context.fillStyle = "#000";									
+									context.fillStyle = "#F00";									
 								} else {
 									context.fillStyle = 'rgba(0, 0, 0, 0)';
 								}
@@ -100,7 +100,7 @@
 						context.stroke();
 						
 						function canvasOnClickHandler(x, y) {
-							var cell = new Cell(Math.floor(y/1.5), Math.floor(x/3)+20);
+							var cell = new Cell(Math.floor(y), Math.floor(x)+15);
 							var state = Grids.grid[cell.row][cell.column] == Grids.ALIVE ? Grids.DEAD : Grids.ALIVE;
 							Grids.grid[cell.row][cell.column] = state;
 							updateAnimations();
