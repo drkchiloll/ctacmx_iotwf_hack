@@ -1,0 +1,172 @@
+<html><head>
+		<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script><style type="text/css"></style>
+		<link rel="stylesheet" href="examplecss.css" type="text/css" media="screen">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>
+		 //intial start
+		//window.setInterval("update()", 1000);
+		
+			$(document).ready(		
+				function() {
+					Array.matrix = function (m, n, initial) {
+					    var a, i, j, mat = [];
+					    for (i = 0; i < m; i += 1) {
+					        a = [];
+					        for (j = 0; j < n; j += 1) {
+					            a[j] = 0;
+					        }
+					        mat[i] = a;
+					    }
+					    return mat;
+					};
+				
+					var Grids = {};
+					Grids.CELL_SIZE = 5;
+					Grids.X = 1000;
+					Grids.Y = 1000;
+					Grids.WIDTH = Grids.X / Grids.CELL_SIZE;
+					Grids.HEIGHT = Grids.Y / Grids.CELL_SIZE;
+					Grids.state = Grids.STOPPED;
+					Grids.interval = null;
+					Grids.grid = Array.matrix(Grids.HEIGHT, Grids.WIDTH, 0);
+					
+		
+		
+		
+					function Cell(row, column) {
+						this.row = row;
+						this.column = column;
+					};
+					var gridCanvas = document.getElementById('grid');	
+					function updateAnimations() {
+						for (var h = 0; h < Grids.HEIGHT/6; h++) {
+							for (var w = 0; w < Grids.WIDTH; w++) {
+								if (Grids.grid[h][w] === Grids.ALIVE) {
+									context.fillStyle = "#000";									
+								} else {
+									context.fillStyle = 'rgba(0, 0, 0, 0)';
+								}
+
+								context.fillRect(
+										w * Grids.CELL_SIZE +1, 
+										h * Grids.CELL_SIZE +1, 
+										Grids.CELL_SIZE -1,
+										Grids.CELL_SIZE -1);
+							}
+						}
+						for (var h = 0; h < Grids.HEIGHT/6 + Grids.HEIGHT/6; h++) {
+							for (var w = 0; w < Grids.WIDTH; w++) {
+								if (Grids.grid[h][w] === Grids.ALIVE) {
+									context.fillStyle = "#FF0000";									
+								} else {
+									context.fillStyle = 'rgba(0, 0, 0, 0)';
+								}
+								context.fillRect(
+										w * Grids.CELL_SIZE +1, 
+										h * Grids.CELL_SIZE +1, 
+										Grids.CELL_SIZE -1,
+										Grids.CELL_SIZE -1);
+							}
+						}
+						for (var h = 0; h < Grids.HEIGHT/6 + Grids.HEIGHT/6 + Grids.HEIGHT/6; h++) {
+							for (var w = 0; w < Grids.WIDTH; w++) {
+								if (Grids.grid[h][w] === Grids.ALIVE) {
+									context.fillStyle = "#000";									
+								} else {
+									context.fillStyle = 'rgba(0, 0, 0, 0)';
+								}
+								context.fillRect(
+										w * Grids.CELL_SIZE +1, 
+										h * Grids.CELL_SIZE +1, 
+										Grids.CELL_SIZE -1,
+										Grids.CELL_SIZE -1);
+							}
+						}
+					};
+					
+					if (gridCanvas.getContext) {
+						var context = gridCanvas.getContext('2d');
+						var offset = Grids.CELL_SIZE;
+					
+						for (var x = 0; x <= Grids.X; x += Grids.CELL_SIZE) {
+							context.moveTo(0.5 + x, 0);
+							context.lineTo(0.5 + x, Grids.Y);
+						}
+						for (var y = 0; y <= Grids.Y; y += Grids.CELL_SIZE) {
+							context.moveTo(0, 0.5 + y);
+							context.lineTo(Grids.X, 0.5 + y);
+						}
+						context.strokeStyle = "#fff";
+						context.stroke();
+						
+						function canvasOnClickHandler(x, y) {
+							var cell = new Cell(Math.floor(y/1.5)+10, Math.floor(x)+15);
+							var state = Grids.grid[cell.row][cell.column] == Grids.ALIVE ? Grids.DEAD : Grids.ALIVE;
+							Grids.grid[cell.row][cell.column] = state;
+							updateAnimations();
+						};
+		
+						function getCursorPosition() {
+							var x;
+							var y;
+							var minx = 35;
+							var miny = 250;
+							var maxx = 215;
+							var maxy = 500;
+							x = Math.floor(Math.random()*(maxx-minx+1)+minx);;
+							y = Math.floor(Math.random()*(maxy-miny+1)+miny);;
+		
+							var cell = new Cell(Math.floor((y - 4) / Grids.CELL_SIZE), Math.floor((x - 2) / Grids.CELL_SIZE));
+							return cell;
+						};
+						
+						
+					} else {
+						alert("Canvas is unsupported in your browser.");
+					}
+					update();
+		window.setInterval("update()", 1000);
+					function update(){
+			$(function(){
+				jQuery.get('zonecords.txt', function(data) {
+				var lines = data.split("\n");
+				var i, x, y, tempLine;
+				for( i=0; i<lines.length; i++){
+					tempLine = lines[i]; //second element is the number
+					/*Checks if Zone does not exist in line*/
+					if(tempLine.indexOf("Zone")<0){ 
+						tempLine = tempLine.split(":");
+						if(tempLine[1]!= null){
+							tempLine[1] = tempLine[1].substring(0, tempLine[1].indexOf(",")-1);
+							
+							x=Math.abs(tempLine[1]);
+							
+							y=Math.abs(tempLine[2]);
+							console.log(x,y, i);
+							canvasOnClickHandler(x,y);
+						}
+						
+					}
+				}
+			  });
+			});
+		}
+		
+				}
+				
+				
+			);
+		</script>
+	</head>
+	<body><div id="cboxOverlay" style="display: none;"></div>
+	
+	<div id="false" style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div>
+				<canvas class ="canv1" id="grid" width="215" height="300"></canvas>
+				<style>
+				canvas.canv1 {
+					border-bottom : 1px gray dotted;
+					border-top : 1px gray dotted;
+				}
+				</style>
+				
+</body></html>
