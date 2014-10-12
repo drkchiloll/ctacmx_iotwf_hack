@@ -1,5 +1,5 @@
 body{
-	background-image: url('1871mainimg.png');
+	background-image: url('../images/1871mainimg.png');
 	background-repeat: no-repeat;
 	margin-center: 20;
 }
@@ -13,13 +13,14 @@ body{
   display: block;
   background 0;
   margin-left: -40;
-  margin-top: 100;
+  margin-top: 0;
   
 }
 .canv3 {
   display: block;
   background 0;
   margin-left: -40;
+  margin-top: 0;
 }
 
 h1 {
