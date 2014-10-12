@@ -100,7 +100,7 @@
 						context.stroke();
 						
 						function canvasOnClickHandler(x, y) {
-							var cell = new Cell(Math.floor(y/1.5)+10, Math.floor(x)+15);
+							var cell = new Cell(Math.floor(y/1.5), Math.floor(x/3)+20);
 							var state = Grids.grid[cell.row][cell.column] == Grids.ALIVE ? Grids.DEAD : Grids.ALIVE;
 							Grids.grid[cell.row][cell.column] = state;
 							updateAnimations();
