@@ -6,12 +6,12 @@
 <script>
 $(document).ready(function(){
   
-    jQuery.get('zones.txt', function(data) {
+    jQuery.get('../documents/zones.txt', function(data) {
     
    //process text file line by line
    //data = data.split(" ");
-   //$('#no').text(data);
-	var x = 80;
+   $('#no').text(data);
+	var x = 40;
    if(x/80>0.5){
 		var green = Math.round(2*(1-x/80)*255);
 		$('#no').text(green);
@@ -29,7 +29,7 @@ $(document).ready(function(){
 </head>
 <body>
 
-<div id="no">If you click on me, I will disappear.</div>
+<div id="no">If </div>
 <div id="box1"></div>
 
 
