@@ -12,11 +12,16 @@
 	<span style="background-color:rgb(0,161,222)" class="destination1"> O'Hare</span>
 	<span style="background-color:rgb(0,161,222)" class="destination2"> O'Hare</span>
 	<span style="background-color:rgb(0,161,222)" class="destination3"> O'Hare</span>
-	<div id="box1"></div>
-	<div id="box2"></div>
-	<div id="box3"></div>
-	<div class="image1" id = "immm"><img src="CTA_Cars_Full_Train.jpg"></div>
-</body>
+
+	<div class="image1" id = "immm"><img src="CTA_Cars_Full_Train.jpg" height="15%" width="300%">
+		<div id="box1"></div>
+		<div id="box2"></div>
+		<div id="box3"></div>	
+		<div id="number1">NUMBER1!!!</div>
+		<div id="number2">NUMBER2!!!</div>
+		<div id="number3">NUMBER3!!!</div>
+	</div>
+	</body>
 
 <script>
 update(); //intial start
@@ -30,6 +35,7 @@ function update(){
 			temp = lines[i].split(":"); //second element is the number
 			console.log(temp[1]);
 			x = temp[1];
+			$("#number"+(i+1)).text(x);
 			if(x/80>0.5){
 				green = Math.round(2*(1-x/80)*255);
 				$("#box"+(i+1)).css("background-color", "rgb(255,"+green+",0)");
