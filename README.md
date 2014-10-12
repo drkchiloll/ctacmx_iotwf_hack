@@ -10,3 +10,7 @@ HTML5/CSS3
 Javascript
 JQuery
 Python
+
+Update:
+===
+Added Images and Stuff
