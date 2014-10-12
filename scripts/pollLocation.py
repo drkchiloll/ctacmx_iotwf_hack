@@ -31,19 +31,13 @@ while True:
                 continue
             elif coordY > 0 and coordY < 30:
                 z1.append(coordY)
-                z1coords.append('X: '+str(coordX)+' , Y: '+str(coordY))
-                # zonecoordsfile.write('Zone 1 Coords.\n')
-                # zonecoordsfile.write('X: '+str(coordX)+'\n'+'Y: '+str(coordY)+'\n')
+                z1coords.append('X: '+str(coordX)+',Y: '+str(coordY))
             elif coordY > 30 and coordY < 51:
-                z2coords.append('X: '+str(coordX)+' , Y: '+str(coordY))
+                z2coords.append('X: '+str(coordX)+',Y: '+str(coordY))
                 z2.append(coordY)
-                # zonecoordsfile.write('Zone 2 Coords.\n')
-                # zonecoordsfile.write('X: '+str(coordX)+'\n'+'Y: '+str(coordY)+'\n')
             elif coordY > 51 and coordY < 91:
-                # zonecoordsfile.write('Zone 3 Coords.\n')
-                # zonecoordsfile.write('X: '+str(coordX)+'\n'+'Y: '+str(coordY)+'\n')
                 z3.append(coordY)
-                z3coords.append('X: '+str(coordX)+' , Y: '+str(coordY))
+                z3coords.append('X: '+str(coordX)+',Y: '+str(coordY))
     zonefile.write('Zone 1: '+ str(len(z1)))
     zonefile.write('\n')
     zonefile.write('Zone 2: '+ str(len(z2)))
