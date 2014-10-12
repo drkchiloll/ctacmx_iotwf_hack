@@ -3,29 +3,44 @@
 <head>
 <link rel="stylesheet" type="test/css" href="box.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="no">If you click on me, I will disappear.</div>
+<div id="box1"></div>
+
 <script>
 $(document).ready(function(){
   
     jQuery.get('../documents/zones.txt', function(data) {
     
+<<<<<<< HEAD
    //process text file line by line
    //data = data.split(" ");
    $('#no').text(data);
 	var x = 40;
+=======
+   process text file line by line
+   data = data.split(" ");
+   console.log(data);
+   $('#no').text(data);
+  var x = 80;
+>>>>>>> 221fa3db2b06519f338ff6045cc12830841f5a23
    if(x/80>0.5){
-		var green = Math.round(2*(1-x/80)*255);
-		$('#no').text(green);
-		$("#box1").css("background-color", "rgb(255,"+green+",0)");
+    var green = Math.round(2*(1-x/80)*255);
+    $('#no').text(green);
+    $("#box1").css("background-color", "rgb(255,"+green+",0)");
    }
    else{
-		var red = Math.round((x/40)*255);
-		$('#no').text(green);
-		$("#box1").css("background-color", "rgb("+red+",255,0)");
+    var red = Math.round((x/40)*255);
+    $('#no').text(green);
+    $("#box1").css("background-color", "rgb("+red+",255,0)");
    }
 
   });
 });
 </script>
+<<<<<<< HEAD
 </head>
 <body>
 
@@ -33,5 +48,7 @@ $(document).ready(function(){
 <div id="box1"></div>
 
 
+=======
+>>>>>>> 221fa3db2b06519f338ff6045cc12830841f5a23
 </body>
 </html>
