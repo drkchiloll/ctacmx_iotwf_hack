@@ -1,0 +1,345 @@
+<html><head>
+		<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script><style type="text/css"></style>
+		<link rel="stylesheet" href="examplecss.css" type="text/css" media="screen">
+		<title>Train</title>
+		<script type="text/javascript">
+			$(document).ready(			
+				function() {
+					// From JavaScript: The good parts - Chapter 6. Arrays, Section 6.7. Dimensions
+					Array.matrix = function (m, n, initial) {
+					    var a, i, j, mat = [];
+					    for (i = 0; i < m; i += 1) {
+					        a = [];
+					        for (j = 0; j < n; j += 1) {
+					            a[j] = 0;
+					        }
+					        mat[i] = a;
+					    }
+					    return mat;
+					};
+				
+					var Life = {};
+					
+					Life.CELL_SIZE = 5;
+					Life.X = 600;
+					Life.Y = 180;
+					Life.WIDTH = Life.X / Life.CELL_SIZE;
+					Life.HEIGHT = Life.Y / Life.CELL_SIZE;
+					Life.DEAD = 0;
+					Life.ALIVE = 1;
+					Life.DELAY = 500;
+					Life.STOPPED = 0;
+					Life.RUNNING = 1;
+					
+					Life.minimum = 2;
+					Life.maximum = 3;
+					Life.spawn = 3;
+					
+					Life.state = Life.STOPPED;
+					Life.interval = null;
+					
+					Life.grid = Array.matrix(Life.HEIGHT, Life.WIDTH, 0);
+										
+					Life.counter = 0;
+									
+					Life.updateState = function() {
+						var neighbours;
+						
+						var nextGenerationGrid = Array.matrix(Life.HEIGHT, Life.WIDTH, 0);
+						
+						for (var h = 0; h < Life.HEIGHT; h++) {
+							for (var w = 0; w < Life.WIDTH; w++) {
+								neighbours = Life.calculateNeighbours(h, w);
+								if (Life.grid[h][w] !== Life.DEAD) {
+									if ((neighbours >= Life.minimum) && (neighbours <= Life.maximum)) {
+										nextGenerationGrid[h][w] = Life.ALIVE;
+									}
+								} else {
+									if (neighbours === Life.spawn) {
+										nextGenerationGrid[h][w] = Life.ALIVE;
+									}
+								}
+							}
+						}
+						Life.copyGrid(nextGenerationGrid, Life.grid);
+						Life.counter++;
+					};
+									
+					Life.calculateNeighbours = function(y, x) {				
+						var total = (Life.grid[y][x] !== Life.DEAD) ? -1 : 0;
+						for (var h = -1; h <= 1; h++) {
+							for (var w = -1; w <= 1; w++) {
+								if (Life.grid[(Life.HEIGHT + (y + h)) % Life.HEIGHT][(Life.WIDTH + (x + w)) % Life.WIDTH] !== Life.DEAD) {
+									total++;
+								}
+							}
+						}
+						return total;
+					};
+					
+					Life.copyGrid = function(source, destination) {
+						for (var h = 0; h < Life.HEIGHT; h++) {
+							/*
+							for (var w = 0; w < Life.WIDTH; w++) {
+								destination[h][w] = source[h][w];
+							}
+							*/
+							destination[h] = source[h].slice(0);
+						}
+					};
+		
+					function Cell(row, column) {
+						this.row = row;
+						this.column = column;
+					};
+		
+					var gridCanvas = document.getElementById('grid');
+					var gridCanvas2 = document.getElementById('grid2');					
+					var counterSpan = document.getElementById("counter");
+					var controlLink = 0;
+					var clearLink = 0;
+					var minimumSelect = 2;
+					var maximumSelect = 3;
+					var spawnSelect = 3;
+					
+					controlLink.onclick = function() {
+						switch (Life.state) {
+						case Life.STOPPED:
+							Life.interval = setInterval(function() {
+								update();
+							}, Life.DELAY);
+							Life.state = Life.RUNNING;
+							break;
+						default:
+							clearInterval(Life.interval);
+							Life.state = Life.STOPPED;
+						}
+					};
+					
+					/*clearLink.onclick = function() {
+						Life.grid = Array.matrix(Life.HEIGHT, Life.WIDTH, 0);
+						Life.counter = 0;
+						clearInterval(Life.interval);
+						Life.state = Life.STOPPED;
+						updateAnimations();
+					}
+					
+					/*minimumSelect.onchange = function() {
+						clearInterval(Life.interval);
+						Life.state = Life.STOPPED;
+						Life.minimum = minimumSelect.value;
+						updateAnimations();
+                                                controlLink.click();
+					}
+					
+					
+					maximumSelect.onchange = function() {
+						clearInterval(Life.interval);
+						Life.state = Life.STOPPED;
+						Life.maximum = maximumSelect.value;
+						updateAnimations();
+                                                controlLink.click();
+					}
+					
+					spawnSelect.onchange = function() {
+						clearInterval(Life.interval);
+						Life.state = Life.STOPPED;
+						Life.spawn = spawnSelect.value;
+						updateAnimations();
+                                                controlLink.click();
+					}*/
+					
+					function update() {
+						Life.updateState();
+					    //updateInput();
+					    //updateAI();
+					    //updatePhysics();
+					    updateAnimations();
+					    //updateSound();
+					    //updateVideo();
+					};
+					
+					function updateAnimations() {
+						for (var h = 0; h < Life.HEIGHT; h++) {
+							for (var w = 0; w < Life.WIDTH; w++) {
+								if (Life.grid[h][w] === Life.ALIVE) {
+									context.fillStyle = "#000";									
+								} else {
+									context.fillStyle = 'rgba(255, 0, 0, 0.01)';
+									
+									//context.clearRect();
+								}
+								context.fillRect(
+										w * Life.CELL_SIZE +1, 
+										h * Life.CELL_SIZE +1, 
+										Life.CELL_SIZE -1,
+										Life.CELL_SIZE -1);
+							}
+						}
+						counterSpan.innerHTML = Life.counter;	
+					};
+					
+					if (gridCanvas.getContext) {
+						var context = gridCanvas.getContext('2d');
+						var offset = Life.CELL_SIZE;
+					
+						for (var x = 0; x <= Life.X; x += Life.CELL_SIZE) {
+							context.moveTo(0.5 + x, 0);
+							context.lineTo(0.5 + x, Life.Y);
+						}
+						for (var y = 0; y <= Life.Y; y += Life.CELL_SIZE) {
+							context.moveTo(0, 0.5 + y);
+							context.lineTo(Life.X, 0.5 + y);
+						}
+						context.strokeStyle = "#fff";
+						context.stroke();
+						
+						function canvasOnClickHandler(event) {
+							var cell = getCursorPosition(event);
+							var state = Life.grid[cell.row][cell.column] == Life.ALIVE ? Life.DEAD : Life.ALIVE;
+							Life.grid[cell.row][cell.column] = state;
+							updateAnimations();
+						};
+		
+						function getCursorPosition(event) {
+							var x;
+							var y;
+							if (event.pageX || event.pageY) {
+								x = event.pageX;
+								y = event.pageY;
+							} else {
+								x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+								y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+							}
+		
+							x -= gridCanvas.offsetLeft;
+							y -= gridCanvas.offsetTop;
+		
+							var cell = new Cell(Math.floor((y - 4) / Life.CELL_SIZE), Math.floor((x - 2) / Life.CELL_SIZE));
+							return cell;
+						};
+						
+						gridCanvas.addEventListener("click", canvasOnClickHandler, false);
+					} else {
+						alert("Canvas is unsupported in your browser.");
+					}
+				}
+			);
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-2662092-4']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+	</head>
+	<body><div id="cboxOverlay" style="display: none;"></div>
+	<div id="<colorbox" class="" style="padding-bottom: 57px; padding-right: 28px; display: none;">
+	<!-- <div id="cboxWrapper"> -->
+		<!--<div id="false">
+			<div id="cboxTopLeft" style="float: left;"></div>
+			<div id="cboxTopCenter" style="float: left;"></div>
+			<div id="cboxTopRight" style="float: left;"></div>
+		</div>
+		 <div id="false" style="clear: left;">
+			<div id="cboxMiddleLeft" style="float: left;"></div>
+			<div id="cboxContent" style="float: left;">
+				<div id="cboxLoadedContent" class="" style="width: 0px; height: 0px; overflow: hidden;"></div>
+				 <div id="cboxLoadingOverlay" class=""></div> 
+				<div id="cboxLoadingGraphic" class=""></div>
+				<div id="cboxTitle" class=""></div>
+				<div id="cboxCurrent" class=""></div>
+				<div id="cboxNext" class=""></div>
+				<div id="cboxPrevious" class=""></div>
+				<div id="cboxSlideshow" class=""></div>
+				<div id="cboxClose" class=""></div>
+			</div>
+			<div id="cboxMiddleRight" style="float: left;"></div>
+		</div> 
+		<div id="false" style="clear: left;">
+			<div id="cboxBottomLeft" style="float: left;"></div>
+			<div id="cboxBottomCenter" style="float: left;"></div>
+			<div id="cboxBottomRight" style="float: left;"></div>
+		</div>
+	</div>-->
+	<div id="false" style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div>
+		<div id="container">
+			<!-- <div id="header">
+				<h1>HTML5, JavaScript, and Canvas - Conway's Game of Life</h1>
+			        <span id="version">Version 1.0</span>
+			</div> -->
+			<!-- <ul id="navigation-list">
+				<li><a href="index.html">Overview</a></li>
+				<li><a href="source.html">Source code</a></li>
+				<li id="active"><a href="game.html" id="current">Conway's Game of Life</a></li>
+			</ul> -->
+			<!-- <div id="left-content"> -->
+				<!-- <h2>Game</h2> -->
+				<!-- <p>Generation counter: <span id="counter">50</span></p> -->
+				<canvas class ="canv1" id="grid" width="180" height="60"></canvas>
+				<style>
+				canvas.canv1 {
+					border-bottom : 1px gray dotted;
+				}
+				canvas.canv2 {
+					border-bottom : 1px gray dotted;
+				}
+				canvas.canv3 {
+					border-bottom : 1px gray dotted;
+				}
+				</style
+				<canvas class ="canv2" id="grid2" width="600" height="180"></canvas>
+				<canvas class ="canv3" id="grid3" width="600" height="180"></canvas>
+			        <!-- <h3>Features pending implementation</h3>
+			        <ul>
+				    <li>Seed patterns</li>
+				    <li>The ability to 'draw' patterns rather than having to click on each individual cell</li>
+				    <li>Colour-coding of (successive) generations</li>
+				    <li>
+				        The ability to change rule sets, e.g., switch between the standard Game of Life's rules and <a href="http://en.wikipedia.org/wiki/Prisoners_dilemma">Prisoner's dilemma</a> rule set
+				    </li>
+				</ul> -->
+			</div>
+			<!-- <div id="right-content"> -->
+				<!-- <h2>Controls</h2> -->
+				<!-- <a id="controlLink" href="javascript:void(0)">Start/Stop</a><br> -->
+				<!-- <a id="clearLink" href="javascript:void(0)">Clear Grid</a> -->
+				<!-- <br> -->
+				<!-- <br>
+				<select id="minimumSelect">
+					<option value="1">One</option>
+					<option value="2" selected="yes">Two</option>
+					<option value="3">Three</option>
+					<option value="4">Four</option>
+					<option value="5">Five</option>
+					<option value="6">Six</option>
+				</select>
+				&nbsp;&nbsp;&nbsp;<b>Minimum variable</b><br>
+				<select id="maximumSelect">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3" selected="yes">Three</option>
+					<option value="4">Four</option>
+					<option value="5">Five</option>
+					<option value="6">Six</option>
+				</select> 	
+				&nbsp;&nbsp;&nbsp;<b>Maximum variable</b><br>
+				<select id="spawnSelect">
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3" selected="yes">Three</option>
+					<option value="4">Four</option>
+					<option value="5">Five</option>
+					<option value="6">Six</option>
+				</select>		-->
+				
+				
+			</div>
+			
+		</div>
+	
+</body></html>
