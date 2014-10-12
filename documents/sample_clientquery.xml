@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<WirelessClientLocation ipAddress="fe80:0000:0000:0000:147f:4cf5:9fb2:5ffe 10.10.30.75" ssId="DevNetCMX" band="UNKNOWN" apMacAddress="54:78:1a:bf:cf:a0" isGuestUser="false" dot11Status="ASSOCIATED" macAddress="78:fd:94:20:e6:c7" currentlyTracked="true" confidenceFactor="144.0">
+    <MapInfo mapHierarchyString="1871&gt;mainBuilding&gt;mainFloor" floorRefId="723412731918549016">
+        <Dimension length="140.0" width="130.0" height="10.0" offsetX="0.0" offsetY="0.0" unit="FEET"/>
+        <Image imageName="domain_0_1411984709983.png"/>
+    </MapInfo>
+    <MapCoordinate x="26.39" y="42.72" unit="FEET"/>
+    <Statistics currentServerTime="2014-10-11T15:19:15.037+0000" firstLocatedTime="2014-10-11T14:29:10.510+0000" lastLocatedTime="2014-10-11T15:15:33.546+0000"/>
+    <GeoCoordinate latitude="41.8883869043" longitude="-87.6358334493" unit="DEGREES"/>
+</WirelessClientLocation>

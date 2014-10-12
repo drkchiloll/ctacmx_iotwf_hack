@@ -1,0 +1,46 @@
+{
+    "WirelessClientLocation": {
+        "macAddress": "78:fd:94:20:e6:c7",
+        "currentlyTracked": true,
+        "confidenceFactor": 136,
+        "ipAddress": [
+            "fe80:0000:0000:0000:147f:4cf5:9fb2:5ffe",
+            "10.10.30.75"
+        ],
+        "ssId": "DevNetCMX",
+        "band": "UNKNOWN",
+        "apMacAddress": "54:78:1a:bf:cf:a0",
+        "isGuestUser": false,
+        "dot11Status": "ASSOCIATED",
+        "MapInfo": {
+            "mapHierarchyString": "1871>mainBuilding>mainFloor",
+            "floorRefId": 723412731918549000,
+            "Dimension": {
+                "length": 140,
+                "width": 130,
+                "height": 10,
+                "offsetX": 0,
+                "offsetY": 0,
+                "unit": "FEET"
+            },
+            "Image": {
+                "imageName": "domain_0_1411984709983.png"
+            }
+        },
+        "MapCoordinate": {
+            "x": 27.63,
+            "y": 51.1,
+            "unit": "FEET"
+        },
+        "Statistics": {
+            "currentServerTime": "2014-10-11T15:21:53.791+0000",
+            "firstLocatedTime": "2014-10-11T14:29:10.510+0000",
+            "lastLocatedTime": "2014-10-11T15:20:54.033+0000"
+        },
+        "GeoCoordinate": {
+            "latitude": 41.8884169963,
+            "longitude": -87.6358374057,
+            "unit": "DEGREES"
+        }
+    }
+}
